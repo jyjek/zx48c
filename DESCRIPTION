@@ -1,0 +1,17 @@
+Package: zx48c
+Type: Package
+Title: Functions for forecasting daily sales
+Version: 0.1.0
+Author: Shpiruk Dmytro
+Maintainer: The package maintainer <shpiruk.d@gmail.com>
+Description: The package including functions for forecasting daily demand for e-commerce and retail.
+    The forecast functions used short-time history period and calculate coefficients of weekly seasonality. 
+    Also it includes two types of sales filtration from unexpected pikes.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: dplyr,tidyr,lubridate,ISOweek,stats
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
