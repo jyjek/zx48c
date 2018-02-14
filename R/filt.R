@@ -7,8 +7,9 @@
 #' @importFrom stats sd
 #' @export
 
-filt <- function(z0){
+#globalVariables(c("new","new_sales"))
 
+filt <- function(z0){
   q0<-z0%>%
     #dplyr::select(SKU,date,sales_num)%>%
     dplyr::group_by(SKU)%>%

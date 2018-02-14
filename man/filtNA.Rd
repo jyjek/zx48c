@@ -2,8 +2,7 @@
 % Please edit documentation in R/filtNA.R
 \name{filtNA}
 \alias{filtNA}
-\title{Filter historical data from promo actions
-This function filter historical data from  days with promo actions}
+\title{Filter historical data from promo actions}
 \usage{
 filtNA(z0)
 }
@@ -14,6 +13,5 @@ filtNA(z0)
 data frame with clear data
 }
 \description{
-Filter historical data from promo actions
 This function filter historical data from  days with promo actions
 }

@@ -1,12 +1,29 @@
 #' ABC analyses
+#'
 #' This function make ABC analyses for each SKU
+#'
+#'\itemize{
+#' \item abc
+#' \item cs
+#' \item nor_sales
+#' \item nor_qnt
+#' \item sls
+#' \item sum_sls
+#' \item top
+#' \item sum_sal
+#'}
+#'
 #' @param dt dataset with historical sales
+#' @param dl coefficients for sales number and money
 #' @return data frame with ABC group for each SKU
 #' @import dplyr
 #' @import ABCanalysis
+#' @importFrom scales rescale
 #' @importFrom lubridate days
 #' @importFrom ISOweek ISOweekday
 #' @export
+
+#globalVariables(c("abc","cs","nor_sales","nor_qnt","sls","sum_sls","top","sum_sal"))
 
 my_abc<-function(dt,dl=c(.5,.5)){
   q1<-dt%>%
@@ -19,8 +36,8 @@ my_abc<-function(dt,dl=c(.5,.5)){
     dplyr::group_by(SKU)%>%
     dplyr::summarise(sum_sal=sum(sales_num,na.rm=T),
               sum_sls=sum(sls,na.rm = T))%>%
-    dplyr::mutate(nor_sales=scales::rescale(sum_sls,to=c(0,1)),
-           nor_qnt=scales::rescale(sum_sal,to=c(0,1)),
+    dplyr::mutate(nor_sales=rescale(sum_sls,to=c(0,1)),
+           nor_qnt=rescale(sum_sal,to=c(0,1)),
            top=nor_sales*dl[1]+nor_qnt*dl[2],
            top=rescale(top,to=c(0,1)))%>%
     arrange(desc(top))%>%

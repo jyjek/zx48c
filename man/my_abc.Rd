@@ -2,18 +2,30 @@
 % Please edit documentation in R/abc.R
 \name{my_abc}
 \alias{my_abc}
-\title{ABC analyses
-This function make ABC analyses for each SKU}
+\title{ABC analyses}
 \usage{
 my_abc(dt, dl = c(0.5, 0.5))
 }
 \arguments{
 \item{dt}{dataset with historical sales}
+
+\item{dl}{coefficients for sales number and money}
 }
 \value{
 data frame with ABC group for each SKU
 }
 \description{
-ABC analyses
 This function make ABC analyses for each SKU
+}
+\details{
+\itemize{
+\item abc
+\item cs
+\item nor_sales
+\item nor_qnt
+\item sls
+\item sum_sls
+\item top
+\item sum_sal
+}
 }

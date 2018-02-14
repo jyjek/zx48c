@@ -6,6 +6,10 @@
 #' @import dplyr
 #' @importFrom ISOweek ISOweekday
 #' @export
+
+globalVariables(c("n1","ALL","LM","TM","LmM","long","fact","week","sales","short","short_M","long_M","kof",
+                  "trend","SM","SmM","type","price"))
+
 forecast <- function(y){
   n1<-ISOweekday(as.Date(max(y$date)))
 

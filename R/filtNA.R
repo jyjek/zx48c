@@ -1,9 +1,12 @@
 #' Filter historical data from promo actions
+#'
 #' This function filter historical data from  days with promo actions
+#'
 #' @param z0 dataset with historical sales
 #' @return data frame with clear data
 #' @import dplyr
 #' @export
+#'
 filtNA<- function(z0){
 
   d<-z0%>%

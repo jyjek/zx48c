@@ -2,20 +2,19 @@
 % Please edit documentation in R/days_koef.R
 \name{days_koef}
 \alias{days_koef}
-\title{Week seasonality
-This function analyze last 8 weeks sales and calculate
-coefficients of day inside week for each group of goods}
+\title{Week seasonality}
 \usage{
 days_koef(z0, cat)
 }
 \arguments{
 \item{z0}{dataset with historical sales}
+
+\item{cat}{dataset with classificators}
 }
 \value{
 data frame with percentage of the day in week
 }
 \description{
-Week seasonality
 This function analyze last 8 weeks sales and calculate
 coefficients of day inside week for each group of goods
 }
