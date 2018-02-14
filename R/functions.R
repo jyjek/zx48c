@@ -1,3 +1,7 @@
+globalVariables(c("n1","ALL","LM","TM","LmM","long","fact","week","sales","short","short_M","long_M","kof",
+                  "trend","SM","SmM","type","price","new","new_sales","SKU","sales_num","category","koef","DateISO",
+                  "abc","cs","nor_sales","nor_qnt","sls","sum_sls","top","sum_sal"))
+
 #' Demand forecast
 #' This function calculate demand forecast for next periods
 #' using 5 methods and choose minimal MAPE
@@ -6,9 +10,6 @@
 #' @import dplyr
 #' @importFrom ISOweek ISOweekday
 #' @export
-
-globalVariables(c("n1","ALL","LM","TM","LmM","long","fact","week","sales","short","short_M","long_M","kof",
-                  "trend","SM","SmM","type","price"))
 
 forecast <- function(y){
   n1<-ISOweekday(as.Date(max(y$date)))
