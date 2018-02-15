@@ -1,6 +1,6 @@
 globalVariables(c("n1","ALL","LM","TM","LmM","long","fact","week","sales","short","short_M","long_M","kof",
                   "trend","SM","SmM","type","price","new","new_sales","SKU","sales_num","category","koef","DateISO",
-                  "abc","cs","nor_sales","nor_qnt","sls","sum_sls","top","sum_sal","type","isAction","mn","balance_num"))
+                  "abc","cs","nor_sales","nor_qnt","sls","sum_sls","top","sum_sal","type","isAction","mn","balance_num","`in`"))
 
 #' Demand forecast
 #'
