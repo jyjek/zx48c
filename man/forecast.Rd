@@ -2,9 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{forecast}
 \alias{forecast}
-\title{Demand forecast
-This function calculate demand forecast for next periods
-using 5 methods and choose minimal MAPE}
+\title{Demand forecast}
 \usage{
 forecast(y)
 }
@@ -15,7 +13,6 @@ forecast(y)
 data frame with forecast
 }
 \description{
-Demand forecast
 This function calculate demand forecast for next periods
 using 5 methods and choose minimal MAPE
 }

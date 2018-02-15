@@ -2,18 +2,18 @@
 % Please edit documentation in R/filt.R
 \name{filt}
 \alias{filt}
-\title{Filter historical data
-This function filter historical data from upper values and replace that to mean}
+\title{Filter historical data}
 \usage{
-filt(z0)
+filt(z0, type = "both")
 }
 \arguments{
 \item{z0}{dataset with historical sales}
+
+\item{type}{type of filtration ("both","upper","lower")}
 }
 \value{
 data frame with clear data
 }
 \description{
-Filter historical data
 This function filter historical data from upper values and replace that to mean
 }
