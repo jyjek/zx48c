@@ -115,6 +115,24 @@ forecast <- function(y){
 #' @export
 
 run_forecast<-function(z0,catg,comp="zero",filt="both",A=.9,B=.8,C=.7){
+  if(!filt %in% c("both","upper","lower")){
+    stop('Wrong "filt" value. It must be "both","lower" or "upper"')
+  }
+  if(!comp %in% c("zero","drop")){
+    stop('Wrong "comp" value. It must be "zero" or "drop"')
+  }
+  if(A<0 | A>1){
+    stop('Wrong "A" value. It must from 0 to 1')
+  }
+  if(B<0 | B>1){
+    stop('Wrong "B" value. It must from 0 to 1')
+  }
+  if(C<0 | C>1){
+    stop('Wrong "C" value. It must from 0 to 1')
+  }
+  if(A<B | A<C | B<C){
+    stop('Wrong ABC value. It will must be A>B>C')
+  }
   data<-z0%>%data_tranform()%>%hist_compl(type=comp)
   ds<-days_koef(data,catg)%>%
     inner_join(data.frame(date=seq(max(data$date)+1,max(data$date)+7,by="day"))%>%
