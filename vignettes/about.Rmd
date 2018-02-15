@@ -1,0 +1,35 @@
+---
+title: "zx48c"
+author: "Shpiruk Dmytro"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+For use package U need input dataset in format:
+
+  - date in format ("%Y-%m-%d")
+  - SKU
+  - inn
+  - sales_num
+  - balance_num
+  - price 
+  - isAction (1 if Action)
+  
+  
+```{r eval=F}
+library(zx48c) 
+q%>%data_tranform()%>%hist_compl()%>%
+  filtNA()%>%filt()%>%forecast()
+  
+```

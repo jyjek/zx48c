@@ -11,7 +11,7 @@
 hist_compl<-function(z0,type="zero"){
   if(type=="zero"){
     q<-z0%>%
-      tidyr::complete(date,SKU,fill = list(`in`=0,isAction=0,sales_num=0))%>%
+      tidyr::complete(date,SKU,fill = list(inn=0,isAction=0,sales_num=0))%>%
       dplyr::group_by(SKU)%>%
       dplyr::mutate(balance_num=dplyr::if_else(is.na(balance_num),lag(balance_num,order_by=date),balance_num),
                     price=dplyr::if_else(is.na(price),round(mean(price,na.rm=T),2),price),
@@ -19,7 +19,7 @@ hist_compl<-function(z0,type="zero"){
   }
   if(type=="drop"){
     q<-z0%>%
-      tidyr::complete(date,SKU,   fill = list(`in`=0,isAction=0))%>%
+      tidyr::complete(date,SKU,   fill = list(inn=0,isAction=0))%>%
       dplyr::group_by(SKU)%>%
       dplyr::mutate(sales_num=dplyr::if_else(is.na(sales_num),round(mean(sales_num,na.rm = T),2),sales_num),
                     price=dplyr::if_else(is.na(price),round(mean(price,na.rm=T),2),price),

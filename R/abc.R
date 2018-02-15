@@ -52,3 +52,43 @@ my_abc<-function(dt,dl=c(.5,.5)){
     dplyr::select(SKU,abc)
   return(tot)
 }
+
+#' Safety Stock
+#'
+#' This function make Safety Stock value for each SKU
+#'
+#'\itemize{
+#' \item abc
+#' \item cs
+#' \item nor_sales
+#' \item nor_qnt
+#' \item sls
+#' \item sum_sls
+#' \item top
+#' \item sum_sal
+#'}
+#'
+#' @param z0 dataset with historical sales
+#' @param A coefficients for ABC group
+#' @param B coefficients for ABC group
+#' @param C coefficients ABC group
+#' @return data frame with ABC group for each SKU
+#' @importFrom dplyr %>%
+#' @export
+
+Saf_Stock<-function(z0,A=.9,B=.8,C=.7){
+  SS<-z0%>%
+    dplyr::inner_join(my_abc(.),by="SKU")%>%
+    dplyr::mutate(koef=dplyr::case_when(abc=="A" ~ A,
+                                        abc=="B" ~ B,
+                                        abc=="C" ~ C))%>%
+    dplyr::group_by(SKU)%>%
+    dplyr::mutate(mean=mean(sales_num,na.rm=T),
+           sd=sd(sales_num,na.rm=T))%>%
+    dplyr::filter(date==max(date))%>%
+    dplyr::group_by(SKU,koef)%>%
+    dplyr::mutate(ss=qnorm(koef,mean=mean,sd=sd,lower.tail=T))%>%
+    dplyr::ungroup()%>%
+    dplyr::select(SKU,ss)
+  return(SS)
+}

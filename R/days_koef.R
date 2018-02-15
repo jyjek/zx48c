@@ -13,11 +13,14 @@
 #globalVariables(c("SKU","sales_num","category","koef","DateISO"))
 
 days_koef<-function(z0,cat){
+  cat<-cat%>%magrittr::set_colnames(c("SKU","category"))
   qr<-z0%>%
     dplyr::filter(date>max(date)-lubridate::days(56))%>%
     dplyr::select(date,SKU,sales_num)%>%
+    dplyr::ungroup()%>%
     dplyr::mutate(sales_num=ifelse(is.na(sales_num),0,sales_num),
-           DateISO=ISOweekday(date))%>%
+           DateISO=ISOweekday(date),
+           SKU=as.numeric(SKU))%>%
     dplyr::left_join(cat,by="SKU")%>%
     dplyr::group_by(category,DateISO)%>%
     dplyr::summarise(sales_num=sum(sales_num))%>%
@@ -26,4 +29,3 @@ days_koef<-function(z0,cat){
     dplyr::select(-sales_num)
   return(qr)
 }
-

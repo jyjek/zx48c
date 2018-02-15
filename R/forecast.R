@@ -99,3 +99,34 @@ forecast <- function(y){
   return(progn)
 }
 
+#' Demand forecast
+#'
+#' This function make data transfom, filtration and calculate forecast
+#'
+#' @param z0 dataset with historical sales
+#' @param catg dataset with classificators of SKU
+#' @param comp type of transform
+#' @param filt typo of filtration
+#' @param A coefficients for ABC group
+#' @param B coefficients for ABC group
+#' @param C coefficients ABC group
+#' @return data frame with forecast
+#' @importFrom  dplyr %>%
+#' @export
+
+run_forecast<-function(z0,catg=cat,comp="zero",filt="both",A=.9,B=.8,C=.7){
+  data<-z0%>%data_tranform()%>%hist_compl(type=comp)
+  ds<-days_koef(data,catg)%>%
+    inner_join(data.frame(date=seq(max(data$date)+1,max(data$date)+7,by="day"))%>%
+                 mutate(DateISO=ISOweekday(date)),by="DateISO")
+
+  fcst<-data%>% filtNA()%>%filt(type=filt)%>%forecast()%>%
+    dplyr::left_join(catg,by="SKU")%>%
+    dplyr::inner_join(ds,by="category")%>%
+    dplyr::left_join(Saf_Stock(data,A,B,C),by="SKU")%>%
+    dplyr::mutate(forecast=round(koef*ALL,3),
+                  ss=round(koef*ss,3))%>%
+    dplyr::select(date,SKU,forecast,type,min,ss)
+   return(fcst)
+}
+
