@@ -7,7 +7,7 @@ Maintainer: The package maintainer <shpiruk.d@gmail.com>
 Description: The package including functions for forecasting daily demand for e-commerce and retail.
     The forecast functions used short-time history period and calculate coefficients of weekly seasonality. 
     Also it includes two types of sales filtration from unexpected pikes.
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: dplyr,tidyr,lubridate,ISOweek,stats,ABCanalysis,scales,magrittr
