@@ -1,6 +1,6 @@
 globalVariables(c("n1","ALL","LM","TM","LmM","long","fact","week","sales","short","short_M","long_M","kof",
                   "trend","SM","SmM","type","price","new","new_sales","SKU","sales_num","category","koef","DateISO",
-                  "abc","cs","nor_sales","nor_qnt","sls","sum_sls","top","sum_sal","type","isAction","mn","balance_num","`in`"))
+                  "abc","cs","nor_sales","nor_qnt","sls","sum_sls","top","sum_sal","type","isAction","mn","balance_num","inn","ss","."))
 
 #' Demand forecast
 #'
@@ -106,7 +106,7 @@ forecast <- function(y){
 #' @param z0 dataset with historical sales
 #' @param catg dataset with classificators of SKU
 #' @param comp type of transform
-#' @param filt typo of filtration
+#' @param filt type of filtration
 #' @param A coefficients for ABC group
 #' @param B coefficients for ABC group
 #' @param C coefficients ABC group
@@ -114,7 +114,7 @@ forecast <- function(y){
 #' @importFrom  dplyr %>%
 #' @export
 
-run_forecast<-function(z0,catg=cat,comp="zero",filt="both",A=.9,B=.8,C=.7){
+run_forecast<-function(z0,catg,comp="zero",filt="both",A=.9,B=.8,C=.7){
   data<-z0%>%data_tranform()%>%hist_compl(type=comp)
   ds<-days_koef(data,catg)%>%
     inner_join(data.frame(date=seq(max(data$date)+1,max(data$date)+7,by="day"))%>%

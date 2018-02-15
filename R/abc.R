@@ -74,6 +74,7 @@ my_abc<-function(dt,dl=c(.5,.5)){
 #' @param C coefficients ABC group
 #' @return data frame with ABC group for each SKU
 #' @importFrom dplyr %>%
+#' @importFrom stats qnorm
 #' @export
 
 Saf_Stock<-function(z0,A=.9,B=.8,C=.7){
