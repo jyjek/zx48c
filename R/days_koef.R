@@ -8,6 +8,7 @@
 #' @return data frame with percentage of the day in week
 #' @importFrom dplyr %>%
 #' @importFrom ISOweek ISOweekday
+#' @importFrom glue glue
 #' @export
 
 #globalVariables(c("SKU","sales_num","category","koef","DateISO"))

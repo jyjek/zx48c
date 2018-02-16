@@ -5,6 +5,7 @@
 #' @param z0 dataset with historical sales
 #' @return data frame with tidy dataset
 #' @importFrom dplyr %>%
+#' @importFrom glue glue
 #' @export
 
 data_tranform<-function(z0){

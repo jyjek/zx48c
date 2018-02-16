@@ -10,7 +10,7 @@ Description: The package including functions for forecasting daily demand for e-
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: dplyr,tidyr,lubridate,ISOweek,stats,ABCanalysis,scales,magrittr
+Imports: dplyr,tidyr,lubridate,ISOweek,stats,ABCanalysis,scales,magrittr,glue
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
