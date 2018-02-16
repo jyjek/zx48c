@@ -29,9 +29,9 @@ my_abc<-function(dt,dl=c(.5,.5)){
   q1<-dt%>%
     dplyr::select(date,SKU,sales_num,price)%>%
     dplyr::rename(date=date)%>%
-    dplyr:: mutate(#date=ymd_hms(date),
-      price=as.numeric(price),
-      sls=price*sales_num)%>%
+    dplyr:: mutate(price=as.numeric(price),
+                   sls=price*sales_num,
+                   price=dplyr::if_else(is.na(price),mean(price,na.rm = T),price))%>%
     dplyr::filter(date>max(date)-days(42))%>%
     dplyr::group_by(SKU)%>%
     dplyr::summarise(sum_sal=sum(sales_num,na.rm=T),

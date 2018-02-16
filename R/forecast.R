@@ -1,6 +1,60 @@
 globalVariables(c("n1","ALL","LM","TM","LmM","long","fact","week","sales","short","short_M","long_M","kof",
-                  "trend","SM","SmM","type","price","new","new_sales","SKU","sales_num","category","koef","DateISO",
+                  "trend","SM","SmM","type","price","new","new_sales","SKU","sales_num","category","koef","DateISO","war",
                   "abc","cs","nor_sales","nor_qnt","sls","sum_sls","top","sum_sal","type","isAction","mn","balance_num","inn","ss","."))
+
+#' Demand forecast
+#'
+#' This function make data transfom, filtration and calculate forecast
+#'
+#' @param z0 dataset with historical sales
+#' @param catg dataset with classificators of SKU
+#' @param hist avaliable of hist_comp function (for "cast" of histiry)
+#' @param comp type of transform
+#' @param filt type of filtration
+#' @param A coefficients for ABC group
+#' @param B coefficients for ABC group
+#' @param C coefficients ABC group
+#' @return data frame with forecast
+#' @importFrom  dplyr %>%
+#' @export
+
+run_forecast<-function(z0,catg,hist=F,comp="zero",filt="both",A=.9,B=.8,C=.7){
+  if(!filt %in% c("both","upper","lower")){
+    stop('Wrong "filt" value. It must be "both","lower" or "upper"')
+  }
+  if(!comp %in% c("zero","drop")){
+    stop('Wrong "comp" value. It must be "zero" or "drop"')
+  }
+  if(A<0 | A>1){
+    stop('Wrong "A" value. It must from 0 to 1')
+  }
+  if(B<0 | B>1){
+    stop('Wrong "B" value. It must from 0 to 1')
+  }
+  if(C<0 | C>1){
+    stop('Wrong "C" value. It must from 0 to 1')
+  }
+  if(A<B | A<C | B<C){
+    stop('Wrong ABC value. It will must be A>B>C')
+  }
+
+  ifelse(hist,data<-z0%>%data_tranform()%>%hist_compl(type=comp),data<-z0%>%data_tranform())
+  ds<-days_koef(data,catg)%>%
+    inner_join(data.frame(date=seq(max(data$date)+1,max(data$date)+7,by="day"))%>%
+                 mutate(DateISO=ISOweek::ISOweekday(date)),by="DateISO")
+
+  fcst<-data%>%dplyr::filter(date>max(date)-lubridate::days(42))%>%
+    filtNA()%>%filt(type=filt)%>%forecast()%>%
+    dplyr::left_join(catg,by="SKU")%>%
+    dplyr::inner_join(ds,by="category")%>%
+    dplyr::left_join(Saf_Stock(data,A,B,C),by="SKU")%>%
+    dplyr::mutate(forecast=round(koef*ALL,3),
+                  ss=round(koef*ss,3))%>%
+    dplyr::select(date,SKU,forecast,type,min,ss)
+  return(fcst)
+}
+
+
 
 #' Demand forecast
 #'
@@ -79,75 +133,24 @@ forecast <- function(y){
     dplyr::full_join(at1,by="SKU")%>%
     dplyr::full_join(st1,by="SKU")%>%
     dplyr::full_join(wm1,by="SKU")%>%
-    dplyr::mutate(TM=abs(fact-trend)/fact*100,TM=ifelse(is.nan(TM),0,TM),
-           LM=abs(fact-long)/fact*100,LM=ifelse(is.nan(LM),0,LM),
-           LmM=abs(fact-long_M)/fact*100,LmM=ifelse(is.nan(LmM),0,LmM),
-           SM=abs(fact-short)/fact*100,SM=ifelse(is.nan(SM),0,SM),
-           SmM=abs(fact-short_M)/fact*100,SmM=ifelse(is.nan(SmM),0,SmM),
-           min=pmin(TM,LM,LmM,SM,SmM),
+    dplyr::mutate_at(vars(trend:short_M), .funs=funs(MAPE=abs(fact-.)/fact*100))%>%
+    dplyr::mutate_all(funs(replace(.,is.nan(.),0)))%>%
+    dplyr::mutate(min=pmin(trend_MAPE,short_M_MAPE,long_MAPE,long_M_MAPE,short_MAPE),
            type=case_when(
-             pmin(TM,LM,LmM,SM,SmM)==TM~"Trend", pmin(TM,LM,LmM,SM,SmM)==LM~"Long",
-             pmin(TM,LM,LmM,SM,SmM)==LmM~"Long_M", pmin(TM,LM,LmM,SM,SmM)==SM~"Short",
-             pmin(TM,LM,LmM,SM,SmM)==SmM~"Short_M"),
+             pmin(trend_MAPE,short_M_MAPE,long_MAPE,long_M_MAPE,short_MAPE)==trend_MAPE~"Trend", pmin(trend_MAPE,short_M_MAPE,long_MAPE,long_M_MAPE,short_MAPE)==long_MAPE~"Long",
+             pmin(trend_MAPE,short_M_MAPE,long_MAPE,long_M_MAPE,short_MAPE)==long_M_MAPE~"Long_M", pmin(trend_MAPE,short_M_MAPE,long_MAPE,long_M_MAPE,short_MAPE)==short_MAPE~"Short",
+             pmin(trend_MAPE,short_M_MAPE,long_MAPE,long_M_MAPE,short_MAPE)==short_M_MAPE~"Short_M"),
            ALL=case_when(
-             pmin(TM,LM,LmM,SM,SmM)==TM~trend, pmin(TM,LM,LmM,SM,SmM)==LM~long,
-             pmin(TM,LM,LmM,SM,SmM)==LmM~long_M, pmin(TM,LM,LmM,SM,SmM)==SM~short,
-             pmin(TM,LM,LmM,SM,SmM)==SmM~short_M),
-           ALL=if_else(is.infinite(min),pmin(trend,long,long_M,short,short_M),ALL),
+             pmin(trend_MAPE,short_M_MAPE,long_MAPE,long_M_MAPE,short_MAPE)==trend_MAPE~trend, pmin(trend_MAPE,short_M_MAPE,long_MAPE,long_M_MAPE,short_MAPE)==long_MAPE~long,
+             pmin(trend_MAPE,short_M_MAPE,long_MAPE,long_M_MAPE,short_MAPE)==long_M_MAPE~long_M, pmin(trend_MAPE,short_M_MAPE,long_MAPE,long_M_MAPE,short_MAPE)==short_MAPE~short,
+             pmin(trend_MAPE,short_M_MAPE,long_MAPE,long_M_MAPE,short_MAPE)==short_M_MAPE~short_M),
+           ALL=if_else(is.infinite(min),pmin(trend,long_M,short_M,long,short),ALL),
            min=if_else(is.infinite(min),100,min))%>%
     dplyr::select(SKU,ALL,fact,type,min)
   return(progn)
 }
 
-#' Demand forecast
-#'
-#' This function make data transfom, filtration and calculate forecast
-#'
-#' @param z0 dataset with historical sales
-#' @param catg dataset with classificators of SKU
-#' @param hist avaliable of hist_comp function (for "cast" of histiry)
-#' @param comp type of transform
-#' @param filt type of filtration
-#' @param A coefficients for ABC group
-#' @param B coefficients for ABC group
-#' @param C coefficients ABC group
-#' @return data frame with forecast
-#' @importFrom  dplyr %>%
-#' @export
 
-run_forecast<-function(z0,catg,hist=F,comp="zero",filt="both",A=.9,B=.8,C=.7){
-  if(!filt %in% c("both","upper","lower")){
-    stop('Wrong "filt" value. It must be "both","lower" or "upper"')
-  }
-  if(!comp %in% c("zero","drop")){
-    stop('Wrong "comp" value. It must be "zero" or "drop"')
-  }
-  if(A<0 | A>1){
-    stop('Wrong "A" value. It must from 0 to 1')
-  }
-  if(B<0 | B>1){
-    stop('Wrong "B" value. It must from 0 to 1')
-  }
-  if(C<0 | C>1){
-    stop('Wrong "C" value. It must from 0 to 1')
-  }
-  if(A<B | A<C | B<C){
-    stop('Wrong ABC value. It will must be A>B>C')
-  }
 
- ifelse(hist,data<-z0%>%data_tranform()%>%hist_compl(type=comp),data<-z0%>%data_tranform())
-  ds<-days_koef(data,catg)%>%
-    inner_join(data.frame(date=seq(max(data$date)+1,max(data$date)+7,by="day"))%>%
-                 mutate(DateISO=ISOweekday(date)),by="DateISO")
 
-  fcst<-data%>%dplyr::filter(date>max(date)-lubridate::days(42))%>%
-                filtNA()%>%filt(type=filt)%>%forecast()%>%
-    dplyr::left_join(catg,by="SKU")%>%
-    dplyr::inner_join(ds,by="category")%>%
-    dplyr::left_join(Saf_Stock(data,A,B,C),by="SKU")%>%
-    dplyr::mutate(forecast=round(koef*ALL,3),
-                  ss=round(koef*ss,3))%>%
-    dplyr::select(date,SKU,forecast,type,min,ss)
-   return(fcst)
-}
 
