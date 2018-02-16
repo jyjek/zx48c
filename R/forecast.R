@@ -105,6 +105,7 @@ forecast <- function(y){
 #'
 #' @param z0 dataset with historical sales
 #' @param catg dataset with classificators of SKU
+#' @param hist avaliable of hist_comp function (for "cast" of histiry)
 #' @param comp type of transform
 #' @param filt type of filtration
 #' @param A coefficients for ABC group

@@ -12,6 +12,8 @@ run_forecast(z0, catg, hist = F, comp = "zero", filt = "both", A = 0.9,
 
 \item{catg}{dataset with classificators of SKU}
 
+\item{hist}{avaliable of hist_comp function (for "cast" of histiry)}
+
 \item{comp}{type of transform}
 
 \item{filt}{type of filtration}
