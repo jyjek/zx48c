@@ -16,6 +16,7 @@ data_tranform<-function(z0){
                     sales_num=as.numeric(sales_num),
                     balance_num=as.numeric(balance_num),
                     price=as.numeric(price),
-                    date=lubridate::ymd(date))
+                    date=lubridate::ymd(date))%>%
+      dplyr::filter(date>max(date)-lubridate::days(56))
   return(q)
     }

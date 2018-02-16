@@ -4,8 +4,8 @@
 \alias{run_forecast}
 \title{Demand forecast}
 \usage{
-run_forecast(z0, catg, comp = "zero", filt = "both", A = 0.9, B = 0.8,
-  C = 0.7)
+run_forecast(z0, catg, hist = F, comp = "zero", filt = "both", A = 0.9,
+  B = 0.8, C = 0.7)
 }
 \arguments{
 \item{z0}{dataset with historical sales}

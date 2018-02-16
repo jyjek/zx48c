@@ -114,7 +114,7 @@ forecast <- function(y){
 #' @importFrom  dplyr %>%
 #' @export
 
-run_forecast<-function(z0,catg,comp="zero",filt="both",A=.9,B=.8,C=.7){
+run_forecast<-function(z0,catg,hist=F,comp="zero",filt="both",A=.9,B=.8,C=.7){
   if(!filt %in% c("both","upper","lower")){
     stop('Wrong "filt" value. It must be "both","lower" or "upper"')
   }
@@ -133,12 +133,14 @@ run_forecast<-function(z0,catg,comp="zero",filt="both",A=.9,B=.8,C=.7){
   if(A<B | A<C | B<C){
     stop('Wrong ABC value. It will must be A>B>C')
   }
-  data<-z0%>%data_tranform()%>%hist_compl(type=comp)
+
+ ifelse(hist,data<-z0%>%data_tranform()%>%hist_compl(type=comp),data<-z0%>%data_tranform())
   ds<-days_koef(data,catg)%>%
     inner_join(data.frame(date=seq(max(data$date)+1,max(data$date)+7,by="day"))%>%
                  mutate(DateISO=ISOweekday(date)),by="DateISO")
 
-  fcst<-data%>% filtNA()%>%filt(type=filt)%>%forecast()%>%
+  fcst<-data%>%dplyr::filter(date>max(date)-lubridate::days(42))%>%
+                filtNA()%>%filt(type=filt)%>%forecast()%>%
     dplyr::left_join(catg,by="SKU")%>%
     dplyr::inner_join(ds,by="category")%>%
     dplyr::left_join(Saf_Stock(data,A,B,C),by="SKU")%>%
