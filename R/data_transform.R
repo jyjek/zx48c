@@ -21,12 +21,7 @@ data_tranform<-function(z0){
                     balance_num=as.numeric(balance_num),
                     price=as.numeric(price),
                     date=lubridate::ymd(date))%>%
+      #dplyr::mutate_if()%>%
       dplyr::filter(date>max(date)-lubridate::days(56))
-
-    war<-q%>%group_by(SKU)%>%
-      summarise(count=n_distinct(date))%>%
-      filter(count<56)%>%
-      pull(SKU)
-    if(length(war)>0) message(glue::glue("Warning: {length(war)} SKU has short history"))
-    return(q)
+return(q)
     }

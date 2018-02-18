@@ -18,7 +18,7 @@ globalVariables(c("n1","ALL","long","fact","week","sales","short","short_M","lon
 #' @importFrom  dplyr %>%
 #' @export
 
-run_forecast<-function(z0,catg,hist=F,comp="zero",filt="both",A=.9,B=.8,C=.7){
+run_forecast<-function(z0,catg,hist=T,comp="zero",filt="both",A=.9,B=.8,C=.7){
   if(!filt %in% c("both","upper","lower")){
     stop('Wrong "filt" value. It must be "both","lower" or "upper"')
   }
