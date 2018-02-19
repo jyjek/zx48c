@@ -16,7 +16,9 @@ hist_compl<-function(z0,type="zero"){
     dplyr::pull(SKU)
   if(length(war)>0) message(glue::glue("Warning: {length(war)} SKU has short history"))
 
+  if(length(war)>0){
   if(type=="zero"){
+
     q<-z0%>%
       dplyr::filter(SKU %in% war)%>%
       tidyr::complete(date,SKU,fill = list(inn=0,isAction=0,sales_num=0,isAction=0))%>%
@@ -26,6 +28,7 @@ hist_compl<-function(z0,type="zero"){
                     balance_num=dplyr::if_else(is.na(balance_num),mean(balance_num,na.rm = T),balance_num),
                     balance_num=dplyr::if_else(is.nan(balance_num),0,balance_num))%>%
       dplyr::bind_rows(.,z0%>%dplyr::filter(!SKU %in% war))
+
   }
   if(type=="drop"){
     q<-z0%>%
@@ -38,6 +41,7 @@ hist_compl<-function(z0,type="zero"){
                     balance_num=dplyr::if_else(is.nan(balance_num),0,balance_num))%>%
       dplyr::bind_rows(.,z0%>%dplyr::filter(!SKU %in% war))
   }
+  }else{q=z0}
  return(q)
 }
 
