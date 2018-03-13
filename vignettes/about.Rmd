@@ -25,11 +25,14 @@ For use package U need input dataset in format:
   - balance_num
   - price 
   - isAction (1 if Action)
-  
-  
+
 ```{r eval=F}
 library(zx48c) 
 q%>%data_tranform()%>%hist_compl()%>%
   filtNA()%>%filt()%>%forecast()
   
 ```
+
+If `hist=T` 1 step of prepare data is `hist_comp` which `complete` absent dates in dataset.<br>
+If `hist=T` we can choose type of history complete one of `drop` or `zero`<br>
+`data_tranform` change format of colums and filtering Date. 

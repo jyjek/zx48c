@@ -8,12 +8,12 @@ globalVariables(c("n1","ALL","long","fact","week","sales","short","short_M","lon
 #'
 #' @param z0 dataset with historical sales
 #' @param catg dataset with classificators of SKU
-#' @param hist avaliable of hist_comp function (for "cast" of histiry)
-#' @param comp type of transform
-#' @param filt type of filtration
-#' @param A coefficients for ABC group
-#' @param B coefficients for ABC group
-#' @param C coefficients ABC group
+#' @param hist avaliable of hist_comp function (for "cast" of history)
+#' @param comp type of transform ("zero","drop")
+#' @param filt type of filtration ("both","upper","lower")
+#' @param A .9 coefficients for ABC group
+#' @param B .8 coefficients for ABC group
+#' @param C .7 coefficients ABC group
 #' @return data frame with forecast
 #' @importFrom  dplyr %>%
 #' @export

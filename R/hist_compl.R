@@ -3,7 +3,7 @@
 #' This function make complete history when some data is dropped
 #'
 #' @param z0 dataset with historical sales
-#' @param type type of dropped rows
+#' @param type  "zero" or "drop". Type of dropped rows
 #' @return data frame with full historical dataset
 #' @importFrom dplyr %>%
 #' @export
@@ -18,7 +18,6 @@ hist_compl<-function(z0,type="zero"){
 
   if(length(war)>0){
   if(type=="zero"){
-
     q<-z0%>%
       dplyr::filter(SKU %in% war)%>%
       tidyr::complete(date,SKU,fill = list(inn=0,isAction=0,sales_num=0,isAction=0))%>%
@@ -28,7 +27,6 @@ hist_compl<-function(z0,type="zero"){
                     balance_num=dplyr::if_else(is.na(balance_num),mean(balance_num,na.rm = T),balance_num),
                     balance_num=dplyr::if_else(is.nan(balance_num),0,balance_num))%>%
       dplyr::bind_rows(.,z0%>%dplyr::filter(!SKU %in% war))
-
   }
   if(type=="drop"){
     q<-z0%>%
