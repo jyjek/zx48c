@@ -12,6 +12,9 @@
 
 
 filt <- function(z0,type="both"){
+  if(!filt %in% c("both","upper","lower")){
+    stop('Wrong "filt" value. It must be "both","lower" or "upper"')
+  }
   if(type=="upper"){
     q0<-z0%>%
       dplyr::select(SKU,date,sales_num)%>%
