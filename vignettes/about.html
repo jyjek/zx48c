@@ -12,7 +12,7 @@
 
 <meta name="author" content="Shpiruk Dmytro" />
 
-<meta name="date" content="2018-02-15" />
+<meta name="date" content="2018-05-24" />
 
 <title>zx48c</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">zx48c</h1>
 <h4 class="author"><em>Shpiruk Dmytro</em></h4>
-<h4 class="date"><em>2018-02-15</em></h4>
+<h4 class="date"><em>2018-05-24</em></h4>
 
 
 
@@ -88,6 +88,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 q<span class="op">%&gt;%</span><span class="kw">data_tranform</span>()<span class="op">%&gt;%</span><span class="kw">hist_compl</span>()<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filtNA</span>()<span class="op">%&gt;%</span><span class="kw">filt</span>()<span class="op">%&gt;%</span><span class="kw">forecast</span>()
   </code></pre></div>
+<p>If <code>hist=T</code> 1 step of prepare data is <code>hist_comp</code> which <code>complete</code> absent dates in dataset.<br> If <code>hist=T</code> we can choose type of history complete one of <code>drop</code> or <code>zero</code><br> <code>data_tranform</code> change format of colums and filtering Date.</p>
 
 
 

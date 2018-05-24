@@ -9,7 +9,7 @@ hist_compl(z0, type = "zero")
 \arguments{
 \item{z0}{dataset with historical sales}
 
-\item{type}{type of dropped rows}
+\item{type}{"zero" or "drop". Type of dropped rows}
 }
 \value{
 data frame with full historical dataset

@@ -12,17 +12,17 @@ run_forecast(z0, catg, hist = T, comp = "zero", filt = "both", A = 0.9,
 
 \item{catg}{dataset with classificators of SKU}
 
-\item{hist}{avaliable of hist_comp function (for "cast" of histiry)}
+\item{hist}{avaliable of hist_comp function (for "cast" of history)}
 
-\item{comp}{type of transform}
+\item{comp}{type of transform ("zero","drop")}
 
-\item{filt}{type of filtration}
+\item{filt}{type of filtration ("both","upper","lower")}
 
-\item{A}{coefficients for ABC group}
+\item{A}{.9 coefficients for ABC group}
 
-\item{B}{coefficients for ABC group}
+\item{B}{.8 coefficients for ABC group}
 
-\item{C}{coefficients ABC group}
+\item{C}{.7 coefficients ABC group}
 }
 \value{
 data frame with forecast
