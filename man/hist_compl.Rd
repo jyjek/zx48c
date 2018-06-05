@@ -4,12 +4,14 @@
 \alias{hist_compl}
 \title{Complete History}
 \usage{
-hist_compl(z0, type = "zero")
+hist_compl(z0, type = "zero", transf = "sku")
 }
 \arguments{
 \item{z0}{dataset with historical sales}
 
 \item{type}{"zero" or "drop". Type of dropped rows}
+
+\item{transf}{"sku" or "fills" for sku or fills detalization}
 }
 \value{
 data frame with full historical dataset
