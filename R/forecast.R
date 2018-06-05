@@ -1,5 +1,5 @@
 globalVariables(c("n1","ALL","long","fact","week","sales","short","short_M","long_M","kof","trend_MAPE","short_M_MAPE","long_MAPE","long_M_MAPE","short_MAPE",
-                  "trend","type","price","new","new_sales","SKU","sales_num","category","koef","DateISO","war",
+                  "trend","type","price","new","new_sales","SKU","sales_num","category","koef","DateISO","war","transf","fils",
                   "abc","cs","nor_sales","nor_qnt","sls","sum_sls","top","sum_sal","type","isAction","mn","balance_num","inn","ss","."))
 
 #' Demand forecast
@@ -20,7 +20,7 @@ globalVariables(c("n1","ALL","long","fact","week","sales","short","short_M","lon
 
 run_forecast<-function(z0,catg,transf="sku",hist=T,comp="zero",filt="both",A=.9,B=.8,C=.7){
   if(!transf %in% c("sku","fills")){
-    stop('Wrong "transf" value. It must be "sku","fils"')
+    stop('Wrong "transf" value. It must be "sku","fills"')
   }
   if(!filt %in% c("both","upper","lower")){
     stop('Wrong "filt" value. It must be "both","lower" or "upper"')

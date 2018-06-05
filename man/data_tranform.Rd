@@ -4,10 +4,12 @@
 \alias{data_tranform}
 \title{Data Transform}
 \usage{
-data_tranform(z0)
+data_tranform(z0, type = "sku")
 }
 \arguments{
 \item{z0}{dataset with historical sales}
+
+\item{type}{type of inputed dataset. it's sku or fills detalization}
 }
 \value{
 data frame with tidy dataset
