@@ -4,10 +4,12 @@
 \alias{filtNA}
 \title{Filter historical data from promo actions}
 \usage{
-filtNA(z0)
+filtNA(z0, type = "sku")
 }
 \arguments{
 \item{z0}{dataset with historical sales}
+
+\item{type}{type of forecast ("sku" or "fills")}
 }
 \value{
 data frame with clear data

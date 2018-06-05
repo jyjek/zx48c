@@ -48,7 +48,7 @@ run_forecast<-function(z0,catg,transf="sku",hist=T,comp="zero",filt="both",A=.9,
                  mutate(DateISO=ISOweek::ISOweekday(date)),by="DateISO")
 
   fcst<-data%>%dplyr::filter(date>max(date)-lubridate::days(42))%>%
-    filtNA()%>%filt(type=filt)%>%forecast()%>%
+    filtNA(type=transf)%>%filt(type=filt)%>%forecast()%>%
     dplyr::left_join(catg,by="SKU")%>%
     dplyr::inner_join(ds,by="category")%>%
     dplyr::left_join(Saf_Stock(data,A,B,C),by="SKU")%>%
