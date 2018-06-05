@@ -18,7 +18,7 @@ globalVariables(c("n1","ALL","long","fact","week","sales","short","short_M","lon
 #' @importFrom  dplyr %>%
 #' @export
 
-run_forecast<-function(z0,catg,hist=T,comp="zero",filt="both",A=.9,B=.8,C=.7){
+run_forecast<-function(z0,catg,transf="sku",hist=T,comp="zero",filt="both",A=.9,B=.8,C=.7){
   if(!filt %in% c("both","upper","lower")){
     stop('Wrong "filt" value. It must be "both","lower" or "upper"')
   }
@@ -38,7 +38,7 @@ run_forecast<-function(z0,catg,hist=T,comp="zero",filt="both",A=.9,B=.8,C=.7){
     stop('Wrong ABC value. It will must be A>B>C')
   }
 
-  ifelse(hist,data<-z0%>%data_tranform()%>%hist_compl(type=comp),data<-z0%>%data_tranform())
+  ifelse(hist,data<-z0%>%data_tranform(type=transf)%>%hist_compl(type=comp),data<-z0%>%data_tranform(type=transf))
   ds<-days_koef(data,catg)%>%
     inner_join(data.frame(date=seq(max(data$date)+1,max(data$date)+7,by="day"))%>%
                  mutate(DateISO=ISOweek::ISOweekday(date)),by="DateISO")
