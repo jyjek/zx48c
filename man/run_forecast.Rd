@@ -12,6 +12,8 @@ run_forecast(z0, catg, transf = "sku", hist = T, comp = "zero",
 
 \item{catg}{dataset with classificators of SKU}
 
+\item{transf}{type of forecast ("sku" or "fills")}
+
 \item{hist}{avaliable of hist_comp function (for "cast" of history)}
 
 \item{comp}{type of transform ("zero","drop")}

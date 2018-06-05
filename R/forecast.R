@@ -8,6 +8,7 @@ globalVariables(c("n1","ALL","long","fact","week","sales","short","short_M","lon
 #'
 #' @param z0 dataset with historical sales
 #' @param catg dataset with classificators of SKU
+#' @param transf type of forecast ("sku" or "fills")
 #' @param hist avaliable of hist_comp function (for "cast" of history)
 #' @param comp type of transform ("zero","drop")
 #' @param filt type of filtration ("both","upper","lower")
