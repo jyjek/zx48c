@@ -35,9 +35,9 @@ data_tranform<-function(z0,type="sku"){
   }
   if(type=="fills"){
     q<-z0%>%
-      magrittr::set_colnames(c("date","fils","SKU","inn","sales_num","balance_num","price","isAction"))%>%
+      magrittr::set_colnames(c("date","fills","SKU","inn","sales_num","balance_num","price","isAction"))%>%
       dplyr::mutate(SKU=as.numeric(SKU),
-                    fils=as.numeric(fils),
+                    fills=as.numeric(fills),
                     inn=as.numeric(inn),
                     sales_num=as.numeric(sales_num),
                     balance_num=as.numeric(balance_num),
