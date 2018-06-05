@@ -10,7 +10,7 @@
 
 hist_compl<-function(z0,type="zero"){
   if(!type %in% c("zero","drop")){
-    stop('Wrong "comp" value. It must be "zero" or "drop"')
+    stop('Wrong "type" value. It must be "zero" or "drop"')
   }
   war<-z0%>%dplyr::group_by(SKU)%>%
     dplyr::summarise(count=n_distinct(date))%>%
