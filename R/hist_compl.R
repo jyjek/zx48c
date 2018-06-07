@@ -28,9 +28,10 @@ hist_compl<-function(z0,type="zero",transf="sku"){
       q<-z0%>%
         dplyr::filter(SKU %in% war)%>%
         tidyr::complete_(c(var,"date"),fill = list(inn=0,isAction=0,sales_num=0))%>%
+        arrange(date)%>%
         # tidyr::complete(date,SKU,fill = list(inn=0,isAction=0,sales_num=0,isAction=0))%>%
         dplyr::group_by_at(var)%>%
-        dplyr::mutate(balance_num=dplyr::if_else(is.na(balance_num),lag(balance_num,order_by=date),balance_num),
+        dplyr::mutate(balance_num=dplyr::if_else(is.na(balance_num),tidyr::fill(balance_num),balance_num),
                       price=dplyr::if_else(is.na(price),round(mean(price,na.rm=T),2),price),
                       balance_num=dplyr::if_else(is.na(balance_num),mean(balance_num,na.rm = T),balance_num),
                       balance_num=dplyr::if_else(is.nan(balance_num),0,balance_num))%>%
@@ -40,6 +41,7 @@ hist_compl<-function(z0,type="zero",transf="sku"){
       q<-z0%>%
         dplyr::filter(SKU %in% war)%>%
         tidyr::complete_(c(var,"date"),fill = list(inn=0,isAction=0))%>%
+        arrange(date)%>%
         # tidyr::complete(date,SKU,fill = list(inn=0,isAction=0))%>%
         dplyr::group_by_at(var)%>%
         dplyr::mutate(sales_num=dplyr::if_else(is.na(sales_num),round(mean(sales_num,na.rm = T),2),sales_num),
