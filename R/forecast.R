@@ -120,7 +120,7 @@ forecast <- function(y){
     subset(week>m1-6)%>%
     dplyr::group_by(SKU,week)%>%
     dplyr::summarise(sales=sum(sales_num))%>%
-    dplyr::mutate(kof=c(0.3,0.4,0.5,0.6,0.8,1),
+    dplyr::mutate(kof=c(0.3,0.4,0.5,0.6,0.8,1)[(6-dplyr::n_distinct(y$week)+1):6],
            mean=mean(sales),
            sd=sd(sales),
            sales=ifelse(sales>2*sd(sales)+mean(sales),0,sales),

@@ -31,7 +31,8 @@ data_tranform<-function(z0,type="sku"){
                     balance_num=as.numeric(balance_num),
                     price=as.numeric(price),
                     date=lubridate::ymd(date))%>%
-      dplyr::filter(date>max(date)-lubridate::days(56))
+      dplyr::filter(date>max(date)-lubridate::days(56))%>%
+      dplyr::as_data_frame()
   }
   if(type=="fills"){
     q<-z0%>%
@@ -43,7 +44,8 @@ data_tranform<-function(z0,type="sku"){
                     balance_num=as.numeric(balance_num),
                     price=as.numeric(price),
                     date=lubridate::ymd(date))%>%
-      dplyr::filter(date>max(date)-lubridate::days(56))
+      dplyr::filter(date>max(date)-lubridate::days(56))%>%
+      dplyr::as_data_frame()
   }
   return(q)
 }

@@ -20,5 +20,6 @@ filtNA<- function(z0,type="sku"){
       sales_num=if_else(is.nan(sales_num),0,sales_num))%>%
     #dplyr::select(date,SKU,sales_num)%>%
     dplyr::group_by_at(c(var,"date"))%>%
-    dplyr::mutate(sales_num=mean(sales_num)))
+    dplyr::mutate(sales_num=mean(sales_num)))%>%
+    dplyr::as_data_frame()
 }
