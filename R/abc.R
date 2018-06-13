@@ -81,9 +81,9 @@ my_abc<-function(dt,dl=c(.5,.5),type="sku"){
 #' @importFrom stats qnorm
 #' @export
 
-Saf_Stock<-function(z0,A=.9,B=.8,C=.7,type="sku"){
+Saf_Stock<-function(z0,A=.9,B=.8,C=.7,type_f="sku"){
   SS<-z0%>%
-    dplyr::inner_join(my_abc(.,type=type),by=var)%>%
+    dplyr::inner_join(my_abc(.,type=type_f),by=var)%>%
     dplyr::mutate(koef=dplyr::case_when(abc=="A" ~ A,
                                         abc=="B" ~ B,
                                         abc=="C" ~ C))%>%
