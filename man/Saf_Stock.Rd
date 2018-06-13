@@ -4,7 +4,7 @@
 \alias{Saf_Stock}
 \title{Safety Stock}
 \usage{
-Saf_Stock(z0, A = 0.9, B = 0.8, C = 0.7, type = "sku")
+Saf_Stock(z0, A = 0.9, B = 0.8, C = 0.7, type_f = "sku")
 }
 \arguments{
 \item{z0}{dataset with historical sales}
@@ -15,7 +15,7 @@ Saf_Stock(z0, A = 0.9, B = 0.8, C = 0.7, type = "sku")
 
 \item{C}{coefficients ABC group}
 
-\item{type}{type of forecast ("sku" or "fills")}
+\item{type_f}{type of forecast ("sku" or "fills")}
 }
 \value{
 data frame with ABC group for each SKU

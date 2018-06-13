@@ -75,7 +75,7 @@ my_abc<-function(dt,dl=c(.5,.5),type="sku"){
 #' @param A coefficients for ABC group
 #' @param B coefficients for ABC group
 #' @param C coefficients ABC group
-#' @param type type of forecast ("sku" or "fills")
+#' @param type_f type of forecast ("sku" or "fills")
 #' @return data frame with ABC group for each SKU
 #' @importFrom dplyr %>%
 #' @importFrom stats qnorm
@@ -85,7 +85,7 @@ Saf_Stock<-function(z0,A=.9,B=.8,C=.7,type_f="sku"){
   if(type_f=="sku"){ var<-c("SKU")}
   if(type_f=="fills"){ var<-c("SKU","fills")}
   SS<-z0%>%
-    dplyr::inner_join(my_abc(.,type=type_f),by=var)%>%
+    dplyr::inner_join(my_abc(.,dl=c(.5,.5),type_f),by=var)%>%
     dplyr::mutate(koef=dplyr::case_when(abc=="A" ~ A,
                                         abc=="B" ~ B,
                                         abc=="C" ~ C))%>%

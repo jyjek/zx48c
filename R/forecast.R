@@ -51,7 +51,7 @@ if(transf=="sku"){
     filtNA(type=transf)%>%filt(type=filt,type_f=transf)%>%forecast()%>%
     dplyr::left_join(catg,by="SKU")%>%
     dplyr::inner_join(ds,by="category")%>%
-    dplyr::left_join(Saf_Stock(data,A,B,C),by="SKU")%>%
+    dplyr::left_join(Saf_Stock(data,A,B,C,type=transf),by="SKU")%>%
     dplyr::mutate(forecast=round(koef*ALL,3),
                   ss=round(koef*ss,3))%>%
     dplyr::select(date,SKU,forecast,type,min,ss)
