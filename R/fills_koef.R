@@ -12,8 +12,8 @@
 
 fills_koef<-function(z0){
   qr<-z0%>%
-    data_tranform(type="fills")%>%
-    dplyr::filter(date>=(max(date)-lubridate::days(42)))%>%
+    #data_tranform(type="fills")%>%
+    #dplyr::filter(date>=(max(date)-lubridate::days(42)))%>%
     dplyr::group_by(SKU,fills)%>%
     dplyr::summarise(tot=sum(sales_num ))%>%
     dplyr::ungroup()%>%
