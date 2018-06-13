@@ -59,7 +59,7 @@ if(transf=="sku"){
   if(transf=="fills"){
    fcst<-data%>%dplyr::filter(date>max(date)-lubridate::days(42))%>%
       filtNA(type=transf)%>%filt(type=filt,type_f=transf)%>%forecast()%>%
-      dplyr::left_join( fills_koef(data0),by="SKU")%>%
+      dplyr::left_join( fills_koef(data),by="SKU")%>%
       dplyr::mutate(ALL=round(ALL*proc,4))%>%
       dplyr::select(-proc)%>%
       dplyr::left_join(cat,by="SKU")%>%
