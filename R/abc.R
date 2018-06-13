@@ -82,6 +82,8 @@ my_abc<-function(dt,dl=c(.5,.5),type="sku"){
 #' @export
 
 Saf_Stock<-function(z0,A=.9,B=.8,C=.7,type_f="sku"){
+  if(type_f=="sku"){ var<-c("SKU")}
+  if(type_f=="fills"){ var<-c("SKU","fills")}
   SS<-z0%>%
     dplyr::inner_join(my_abc(.,type=type_f),by=var)%>%
     dplyr::mutate(koef=dplyr::case_when(abc=="A" ~ A,
