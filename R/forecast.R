@@ -64,7 +64,7 @@ if(transf=="sku"){
       dplyr::select(-proc)%>%
       dplyr::left_join(cat,by="SKU")%>%
       dplyr::inner_join(ds,by="category")%>%
-      dplyr::mutate(ALL=round(ALL*koef,4))%>%
+      dplyr::mutate(forecast=round(ALL*koef,4))%>%
       dplyr::select(date,SKU,fills,forecast,type,min)
   }
   return(fcst)
