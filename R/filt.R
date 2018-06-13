@@ -22,7 +22,7 @@ filt <- function(z0,type="both",type_f="sku"){
   if(type=="upper"){
     q0<-z0%>%
       dplyr::select_at(c(var,"date","sales_num","balance_num"))%>%
-      dplyr::group_by_(var)%>%
+      dplyr::group_by_at(var)%>%
       dplyr::mutate(sd=sd(sales_num,na.rm=T),
                     new=ifelse(sales_num>mean(sales_num,na.rm=T)+1.5*sd(sales_num,na.rm=T),NA,sales_num ),
                     new_sales=ifelse(is.na(new),mean(new,na.rm=T)+sd,new))%>%
@@ -33,7 +33,7 @@ filt <- function(z0,type="both",type_f="sku"){
   if(type=="both"){
     q0<-z0%>%
       dplyr::select_at(c(var,"date","sales_num","balance_num"))%>%
-      dplyr::group_by_(var)%>%
+      dplyr::group_by_at(var)%>%
       dplyr::mutate(mn=mean(sales_num,na.rm=T),
                     sales_num=ifelse(balance_num<mn,NA,sales_num),
                     new=ifelse(sales_num>mean(sales_num,na.rm=T)+1.5*sd(sales_num,na.rm=T),NA,sales_num),
@@ -45,7 +45,7 @@ filt <- function(z0,type="both",type_f="sku"){
   if(type=="lower"){
     q0<-z0%>%
       dplyr::select_at(c(var,"date","sales_num","balance_num"))%>%
-      dplyr::group_by_(var)%>%
+      dplyr::group_by_at(var)%>%
       dplyr::mutate(new=ifelse(balance_num<mean(sales_num,na.rm = T),NA,sales_num),
                     new_sales=ifelse(is.na(new),mean(new,na.rm=T)+sd(new,na.rm=T),new),
                     new_sales=ifelse(is.nan(new_sales),0,new_sales))%>%

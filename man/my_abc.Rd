@@ -4,12 +4,14 @@
 \alias{my_abc}
 \title{ABC analyses}
 \usage{
-my_abc(dt, dl = c(0.5, 0.5))
+my_abc(dt, dl = c(0.5, 0.5), type = "sku")
 }
 \arguments{
 \item{dt}{dataset with historical sales}
 
 \item{dl}{coefficients for sales number and money}
+
+\item{type}{type of forecast ("sku" or "fills")}
 }
 \value{
 data frame with ABC group for each SKU
