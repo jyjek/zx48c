@@ -3,6 +3,7 @@
 export(Saf_Stock)
 export(data_tranform)
 export(days_koef)
+export(fills_koef)
 export(filt)
 export(filtNA)
 export(forecast)
