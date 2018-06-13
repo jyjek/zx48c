@@ -1,5 +1,5 @@
 globalVariables(c("n1","ALL","long","fact","week","sales","short","short_M","long_M","kof","trend_MAPE","short_M_MAPE","long_MAPE","long_M_MAPE","short_MAPE",
-                  "trend","type","price","new","new_sales","SKU","sales_num","category","koef","DateISO","war","transf","fils","type_f",
+                  "trend","type","price","new","new_sales","SKU","sales_num","category","koef","DateISO","war","transf","fils","type_f","fill","proc","tot",
                   "abc","cs","nor_sales","nor_qnt","sls","sum_sls","top","sum_sal","type","isAction","mn","balance_num","inn","ss","."))
 
 #' Demand forecast
