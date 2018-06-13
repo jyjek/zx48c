@@ -1,5 +1,5 @@
 globalVariables(c("n1","ALL","long","fact","week","sales","short","short_M","long_M","kof","trend_MAPE","short_M_MAPE","long_MAPE","long_M_MAPE","short_MAPE",
-                  "trend","type","price","new","new_sales","SKU","sales_num","category","koef","DateISO","war","transf","fils",
+                  "trend","type","price","new","new_sales","SKU","sales_num","category","koef","DateISO","war","transf","fils","type_f",
                   "abc","cs","nor_sales","nor_qnt","sls","sum_sls","top","sum_sal","type","isAction","mn","balance_num","inn","ss","."))
 
 #' Demand forecast
@@ -48,7 +48,7 @@ run_forecast<-function(z0,catg,transf="sku",hist=T,comp="zero",filt="both",A=.9,
                  mutate(DateISO=ISOweek::ISOweekday(date)),by="DateISO")
 
   fcst<-data%>%dplyr::filter(date>max(date)-lubridate::days(42))%>%
-    filtNA(type=transf)%>%filt(type=filt)%>%forecast()%>%
+    filtNA(type=transf)%>%filt(type=filt,type_f=transf)%>%forecast()%>%
     dplyr::left_join(catg,by="SKU")%>%
     dplyr::inner_join(ds,by="category")%>%
     dplyr::left_join(Saf_Stock(data,A,B,C),by="SKU")%>%

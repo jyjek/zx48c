@@ -4,12 +4,14 @@
 \alias{filt}
 \title{Filter historical data}
 \usage{
-filt(z0, type = "both")
+filt(z0, type = "both", type_f = "sku")
 }
 \arguments{
 \item{z0}{dataset with historical sales}
 
 \item{type}{type of filtration ("both","upper","lower")}
+
+\item{type_f}{type of forecast ("sku" or "fills")}
 }
 \value{
 data frame with clear data
